@@ -1,11 +1,13 @@
 def main():
-    with open("program.txt", "r") as p:
+    with open("program.tcp", "r", encoding='UTF-8') as p:
         program = p.readlines()
         convert = bytearray()
         # Convert the program to binary
         for line in program:
             code = line.split()
-            convert.append(opcode_convert(code))
+            instuction = opcode_convert(code)
+            if instuction != 0:
+                convert.append(instuction)
 
     with open("code.bin", "wb") as c:
         c.write(convert)
@@ -13,31 +15,33 @@ def main():
 def opcode_convert(code: str):
     opcode = 0b0
     # Convert the opcode to binary
-    if code[0] == "nand":
-        opcode += 0b00
-        opcode = opcode << 6
-        opcode += operand_convert(code)
+    try:
+        if code[0] == "nand":
+            opcode += 0b00
+            opcode = opcode << 6
+            opcode += operand_convert(code)
 
-    elif code[0] == "shift":
-        opcode += 0b01
-        opcode = opcode << 6
-        opcode += operand_convert(code)
+        elif code[0] == "shift":
+            opcode += 0b01
+            opcode = opcode << 6
+            opcode += operand_convert(code)
 
-    elif code[0] == "save":
-        opcode += 0b10
-        opcode = opcode << 6
-        opcode += int(code[1])
+        elif code[0] == "save":
+            opcode += 0b10
+            opcode = opcode << 6
+            opcode += int(code[1])
 
-    elif code[0] == "load":
-        opcode += 0b11
-        opcode = opcode << 6
-        opcode += int(code[1])
-    
-    elif code[0] == "#":
-        pass
+        elif code[0] == "load":
+            opcode += 0b11
+            opcode = opcode << 6
+            opcode += int(code[1])
         
-    else:
-        print("Invalid instruction")
+        elif code[0] == "#":
+            pass
+        else:
+            print("Invalid instruction")
+    except:
+        pass
     return opcode
 
 def operand_convert(code: str):
