@@ -32,6 +32,9 @@ def opcode_convert(code: str):
         opcode += 0b11
         opcode = opcode << 6
         opcode += int(code[1])
+    
+    elif code[0] == "#":
+        pass
         
     else:
         print("Invalid instruction")
@@ -48,13 +51,13 @@ def operand_convert(code: str):
             return operand
 
     # Convert the operand to binary
-        if code[i] == "T":
+        if code[i] == "t":
             operand += 0b00
-        elif code[i] == "R":
+        elif code[i] == "r":
             operand += 0b01
-        elif code[i] == "A":
+        elif code[i] == "a":
             operand += 0b10
-        elif code[i] == "B":
+        elif code[i] == "b":
             operand += 0b11
         else:
             print("Invalid operand")
