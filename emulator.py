@@ -1,5 +1,5 @@
 #自作CPUのエミュレータ
-
+import os
 import sys
 # レジスタとメモリ空間の初期化
 register = [1, 0, 0, 0] # t, r, a, b
@@ -20,9 +20,12 @@ def main(file: str):
 
 def draw_memory():
     global memory
+    os.system("cls")
     for i in range(8):
         for j in range(8):
             print(format(memory[i*8+j], "02x"), end=" ")
+        if i < 4:
+            print(f"r[{i}] {register[i]}", end="")
         print()
 
 def opcode_decode(code: bytes):
@@ -45,7 +48,8 @@ def nand(operand: bytes):
     operand1 = operand >> 2 & 0b11
     operand2 = operand & 0b11
     # 演算
-    register[operand0] = ~(register[operand1] & register[operand2])
+    if operand != 0b00:
+        register[operand0] = ~(register[operand1] & register[operand2])
 
 def shift(operand: bytes):
     global register
@@ -54,15 +58,14 @@ def shift(operand: bytes):
     operand1 = operand >> 2 & 0b11
     operand2 = operand & 0b11
     # 演算
-    register[operand0] = (register[operand1] << register[operand2])
-    return
+    if operand != 0b00:
+        register[operand0] = (register[operand1] << register[operand2])
 
 def save(operand: bytes):
     global register
     global memory
     # メモリに格納
     memory[operand] = register[1]
-    return
 
 def load(operand: bytes):
     global register
