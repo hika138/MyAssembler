@@ -1,5 +1,8 @@
-def main():
-    with open("program.tcp", "r", encoding='UTF-8') as p:
+import sys
+
+def main(input_file: str, output_file: str):
+    print(output_file)
+    with open(input_file, "r", encoding='UTF-8') as p:
         program = p.readlines()
         convert = bytearray()
         # Convert the program to binary
@@ -9,7 +12,7 @@ def main():
             if instuction != 0:
                 convert.append(instuction)
 
-    with open("code.bin", "wb") as c:
+    with open(output_file, "wb") as c:
         c.write(convert)
 
 def opcode_convert(code: str):
@@ -68,4 +71,4 @@ def operand_convert(code: str):
             break
     return operand
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1], sys.argv[2])
