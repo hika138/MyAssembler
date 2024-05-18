@@ -5,27 +5,27 @@ import sys
 register = [1, 0, 0, 0] # t, r, a, b
 memory = [0] * 64
 
-memory[0] = 10
-memory[1] = 15
-
 def main(file: str):
-    with open("code.bin", "rb") as f:
+    with open(file, "rb") as f:
         # 8bitずつ読み込む
         while True:
+            input()
+            draw_memory()
             code = f.read(1)
             if not code:
                 break
             opcode_decode(code)
-            draw_memory()
 
 def draw_memory():
     global memory
     os.system("cls")
     for i in range(8):
         for j in range(8):
+            # メモリ表示
             print(format(memory[i*8+j], "02x"), end=" ")
         if i < 4:
-            print(f"r[{i}] {register[i]}", end="")
+            # レジスタ表示
+            print(f"r[{i}] {format(register[i], "02x")}", end="")
         print()
 
 def opcode_decode(code: bytes):
@@ -48,7 +48,7 @@ def nand(operand: bytes):
     operand1 = operand >> 2 & 0b11
     operand2 = operand & 0b11
     # 演算
-    if operand != 0b00:
+    if operand0 != 0b00:
         register[operand0] = ~(register[operand1] & register[operand2])
 
 def shift(operand: bytes):
