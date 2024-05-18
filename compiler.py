@@ -1,13 +1,4 @@
 # 入力ファイルの行を読み込んで、それを解析して、出力ファイルに書き込む。メモリのアドレスを直に触る。
-# CPY dst src -> load src, save dst
-# NOT(dst, src) -> NAND(dst, src, src)
-# AND(dst, src1, src2) -> NAND(dst, src1, src2) + NOT(dst, dst)
-# NAND(dst, src1, src2) -> "load src1\nnand a r r\nnand a a a\nload src2\nnand b r r\nnand b b b\nnand r a b\nsave dst\n"
-# OR(dst, src1, src2) -> "load src1\nnand a r r\nload src2\nnand b r r\nnand a a b\nsave dst\n"
-# NOR(dst, src1, src2) -> OR(dst, src1, src2) + NOT(dst, dst)
-# XOR(dst, src1, src2) -> "load src1\nnand a r r\nnand a a a\nload src2\nnand b r r\nnand b b b\nnand r a b\nnand a r r\nnand b r r\nnand r a b\nsave dst\n"
-# SET(dst, num) -> 8回シフトしてrを0にする -> シフトしてnumの各ビットを取り出して、1のときにrとtのorを取る -> rをdstに保存
-# となるように変換する
 
 import sys
 
