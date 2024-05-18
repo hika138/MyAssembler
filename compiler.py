@@ -38,6 +38,8 @@ def Analyze(file):
                 compile_code += XOR(code[1], code[2], code[3])
             elif code[0] == "set":
                 compile_code += SET(code[1], int(code[2]))
+            elif code[0] == "#":
+                pass
             else:
                 print("Invalid instruction")
     return compile_code
