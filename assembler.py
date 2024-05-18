@@ -1,7 +1,6 @@
 import sys
 
 def main(input_file: str, output_file: str):
-    print(output_file)
     with open(input_file, "r", encoding='UTF-8') as p:
         program = p.readlines()
         convert = bytearray()
@@ -9,8 +8,7 @@ def main(input_file: str, output_file: str):
         for line in program:
             code = line.split()
             instuction = opcode_convert(code)
-            if instuction != 0:
-                convert.append(instuction)
+            convert.append(instuction)
 
     with open(output_file, "wb") as c:
         c.write(convert)
