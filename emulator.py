@@ -6,15 +6,16 @@ register = [1, 0, 0, 0] # t, r, a, b
 memory = [0] * 64
 
 def main(file: str):
+    input()
     with open(file, "rb") as f:
         # 8bitずつ読み込む
         while True:
-            input()
             draw_memory()
             code = f.read(1)
             if not code:
                 break
             opcode_decode(code)
+    input()
 
 def draw_memory():
     global memory
@@ -50,6 +51,7 @@ def nand(operand: bytes):
     # 演算
     if operand0 != 0b00:
         register[operand0] = ~(register[operand1] & register[operand2])
+        register[operand0] &= 0b11111111
 
 def shift(operand: bytes):
     global register
@@ -58,8 +60,9 @@ def shift(operand: bytes):
     operand1 = operand >> 2 & 0b11
     operand2 = operand & 0b11
     # 演算
-    if operand != 0b00:
+    if operand0 != 0b00:
         register[operand0] = (register[operand1] << register[operand2])
+        register[operand0] &= 0b11111111
 
 def save(operand: bytes):
     global register
