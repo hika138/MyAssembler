@@ -120,8 +120,8 @@ def ADD(sum:str, carry:str, operand3:str, operand4:str):
 
     return code
 
-def SET(operand1:str, num: str):
-    num = int(num)
+def SET(operand1:str, num_str: str):
+    num = int(num_str)
     code = ""
     # aにnot(1)を入れる
     code += f'nand a t t\n'
@@ -177,4 +177,8 @@ def clear(reg:str):
     return code
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+        # 出力ファイル名が指定されていない場合は、入力ファイル名の拡張子を.tcpに変更
+    if len(sys.argv) == 2:
+        main(sys.argv[1], sys.argv[1].replace(".tby", ".tcp"))
+    else:
+        main(sys.argv[1], sys.argv[2])

@@ -69,4 +69,8 @@ def operand_convert(code: str):
             break
     return operand
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    # 出力ファイル名が指定されていない場合は、入力ファイル名の拡張子を.binに変更
+    if len(sys.argv) == 2:
+        main(sys.argv[1], sys.argv[1].replace(".tcp", ".bin"))
+    else:
+        main(sys.argv[1], sys.argv[2])
