@@ -7,6 +7,8 @@ def main(input_file: str, output_file: str):
         # Convert the program to binary
         for line in program:
             code = line.split()
+            if line[0] == "#":
+                continue
             instuction = opcode_convert(code)
             convert.append(instuction)
 
@@ -36,9 +38,6 @@ def opcode_convert(code: str):
             opcode += 0b11
             opcode = opcode << 6
             opcode += int(code[1])
-        
-        elif code[0] == "#":
-            pass
         else:
             print("Invalid instruction")
     except:

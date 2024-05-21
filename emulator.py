@@ -6,7 +6,7 @@ register = [1, 0, 0, 0] # t, r, a, b
 memory = [0] * 64
 
 def main(file: str):
-    input()
+    input("Press Enter to start...")
     with open(file, "rb") as f:
         # 8bitずつ読み込む
         while True:
@@ -15,7 +15,7 @@ def main(file: str):
             if not code:
                 break
             opcode_decode(code)
-    input()
+    input("Press Enter to exit...")
 
 def draw_memory():
     global memory
