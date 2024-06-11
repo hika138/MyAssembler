@@ -19,7 +19,7 @@ def main(file: str):
 
 def draw_memory():
     global memory
-    os.system("cls")
+    #os.system("cls")
     for i in range(8):
         for j in range(8):
             # メモリ表示
@@ -59,9 +59,12 @@ def shift(operand: bytes):
     operand0 = operand >> 4 & 0b11
     operand1 = operand >> 2 & 0b11
     operand2 = operand & 0b11
+    highest_bit = (register[operand1] & 0b10000000) >> 7
     # 演算
     if operand0 != 0b00:
-        register[operand0] = (register[operand1] << register[operand2])
+        register[operand0] = (register[operand1] << 1)
+        register[operand0] &= 0b11111111
+        register[operand0] |= (highest_bit)
         register[operand0] &= 0b11111111
 
 def save(operand: bytes):

@@ -66,8 +66,7 @@ def Analyze(file):
                 elif code[0] == "shift":
                     code[1] = search_var(code[1])
                     code[2] = search_var(code[2])
-                    code[3] = search_var(code[3])
-                    compile_code += SHIFT(code[1], code[2], code[3])
+                    compile_code += SHIFT(code[1], code[2])
                 elif code[0] == "add":
                     code[1] = search_var(code[1])
                     code[2] = search_var(code[2])
@@ -118,12 +117,10 @@ def XOR(operand1:str, operand2:str, operand3:str):
     return f"load {operand2}\nnand a r r\nnand a a a\nload {operand3}\nnand b r r\nnand b b b\nnand r a b\nnand a r a\nnand b r b\nnand r a b\nsave {operand1}\n"
 
 # operand2をoperand3ビットシフト
-def SHIFT(operand1:str, operand2:str, operand3:str):
-    operand3 = int(operand3)
+def SHIFT(operand1:str, operand2:str):
     code = ""
     code += f"load {operand2}\n"
-    for i in range(int(operand3)):
-        code += f"shift r r t\n"
+    code += f"shift r r t\n"
     code += f"save {operand1}\n"
     return code
 
@@ -132,14 +129,14 @@ def ADD(sum:str, carry:str, operand3:str, operand4:str):
     code = ""
     code += XOR(sum, operand3, operand4)
     code += AND(carry, operand3, operand4)
-    code += SHIFT(carry, carry, 1)
+    code += SHIFT(carry, carry)
     VAR("temp") # 一時変数
     code += CPY(search_var("temp"), sum)
     for i in range(7):
         code += XOR(search_var("temp"), search_var("temp"), carry)
         code += AND(carry, sum, carry)
         code += CPY(sum, search_var("temp"))
-        code += SHIFT(carry, carry, 1)
+        code += SHIFT(carry, carry)
     code += SET(search_var("temp"), 0)
     free("temp")
     return code
@@ -199,8 +196,7 @@ def free(var:str):
 # レジスタをクリアする
 def clear(reg:str):
     code = ""
-    for i in range(8):
-        code += f'shift {reg} {reg} t\n'
+    code += "nand r r t\nnand r r r\nshift r r t\nnand r r t\nnand r r r\n"
     return code
 
 if __name__ == "__main__":
