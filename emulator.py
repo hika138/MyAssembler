@@ -27,7 +27,8 @@ def draw_memory():
         if i < 4:
             # レジスタ表示
             print(f"r[{i}] {format(register[i], "02x")}", end="")
-        print()
+        print("")
+    print("")
 
 def opcode_decode(code: bytes):
     IntCode = int.from_bytes(code, "big")
