@@ -1,34 +1,34 @@
 # 自作CPU用アセンブラ+α
 ## 命令リファレンス
-`nand` `<dst>` `<src1>` `<src2>`
+`nand` `<dst>` `<src1>` `<src2>`\
 `src1`レジスタと`src2`レジスタの値をNAND演算して、その結果を`dst`レジスタに格納します。
 
-`shift` `<dst>` `<src>` `<cnt>`
+`shift` `<dst>` `<src>` `<cnt>`\
 `src`レジスタの値を`cnt`レジスタの値分だけ左シフトして、その結果を`dst`レジスタに格納します。
 
-`save` `<address>`
+`save` `<address>`\
 `address`で指定されたメモリアドレスにrレジスタの値を格納します。
 
-`load` `<address>`
+`load` `<address>`\
 `address`で指定されたメモリアドレスの値をrレジスタに格納します。
 
-`#`
+`#`\
 コメントアウト。`#`から始まる行はアセンブルされません。
 
 ## レジスタリファレンス
-`t` : トゥルーレジスタ。読み取り専用で常に0000 0001を出力します。 
-`r` : リザルトレジスタ。主に演算結果の出力先に用います。また、saveとloadで参照されます。
-`a` : 汎用レジスタ。
+`t` : トゥルーレジスタ。読み取り専用で常に0000 0001を出力します。 \
+`r` : リザルトレジスタ。主に演算結果の出力先に用います。また、saveとloadで参照されます。\
+`a` : 汎用レジスタ。\
 `b` : 汎用レジスタ。
 
 ## アセンブラ
-アセンブラはpython3で動作します。
-実行する際は
-`$ python assembler.py <InputFile>.tcp <OutputFile>.bin`
+アセンブラはpython3で動作します。\
+実行する際は\
+`$ python assembler.py <InputFile>.tcp <OutputFile>.bin`\
 でアセンブル元のtcpファイルとアセンブル先のbinファイルを指定してください。アセンブル先は省略可能で、省略した場合アセンブル先のファイル名は`<InputFile>.bin`になります。
 
 ## エミュレータ
-エミュレータはpython3で動作します。
-実行する際は
-`$ python emulator.py <File>.bin`
+エミュレータはpython3で動作します。\
+実行する際は\
+`$ python emulator.py <File>.bin`\
 でbinファイルを指定して実行してください。
